@@ -19,6 +19,7 @@ func TestCommaBytesBuffer(t *testing.T) {
 func TestCommaFloatEnhanced(t *testing.T) {
 	assert.Equal(t, CommaFloatEnhancedSafe("-1235.2991237"), CommaFloatEnhanced("-1235.2991237"))
 }
+
 func bench(b *testing.B, f func(string) string) {
 	for i := 0; i < b.N; i++ {
 		s := "1236749"
