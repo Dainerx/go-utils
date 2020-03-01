@@ -1,6 +1,22 @@
 package crypto
 
-import "fmt"
+import (
+	"encoding/binary"
+	"fmt"
+)
+
+var S0 = [][]uint16{
+	{1, 0, 3, 2},
+	{3, 2, 1, 0},
+	{0, 2, 1, 3},
+	{3, 1, 3, 2},
+}
+var S1 = [][]uint16{
+	{0, 1, 2, 3},
+	{2, 0, 1, 3},
+	{3, 0, 1, 0},
+	{2, 1, 0, 3},
+}
 
 func Permute(input []byte, positions []int8, n int) []byte {
 	permutedInput := make([]byte, n)
@@ -25,7 +41,6 @@ func CircularShift(input []byte, rotation int, n int) []byte {
 		if rotation < 0 { // negative value just add size to solve.
 			rotation += n
 		}
-		fmt.Println(rotation)
 		for i := 0; i < n; i++ {
 			newPos := (i + rotation) % (n)
 			rotatedInput[newPos] = input[i]
@@ -40,4 +55,17 @@ func Xor(input []byte, key []byte, n int) []byte {
 		xorResult[i] = input[i] ^ key[i]
 	}
 	return xorResult
+}
+
+func GetTwoBytesFromS0(row, column int8) []byte {
+	twoBytes := make([]byte, 2)
+	binary.LittleEndian.PutUint16(twoBytes, S0[row][column])
+	return twoBytes
+}
+
+func GetTwoBytesFromS1(row, column int8) []byte {
+	fmt.Printf("%d,%d\n", row, column)
+	twoBytes := make([]byte, 2)
+	binary.LittleEndian.PutUint16(twoBytes, S1[row][column])
+	return twoBytes
 }
