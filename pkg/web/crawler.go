@@ -12,12 +12,11 @@ func FindLinksFromStandardInput() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(doc)
 	visit(doc)
 	return nil
 }
 
-func FindLinksFromHtmlFile(filePath string) error {
+func FindLinksInHtmlFile(filePath string) error {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return err
@@ -44,5 +43,31 @@ func visit(n *html.Node) {
 
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		visit(c)
+	}
+}
+
+func CountElementsInHtmlFile(filePath string) (map[string]int, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	doc, err := html.Parse(file)
+	if err != nil {
+		return nil, err
+	}
+
+	elementCounter := make(map[string]int)
+	visitCount(elementCounter, doc) // map is passed by reference.
+	return elementCounter, nil
+}
+
+func visitCount(elementCounter map[string]int, n *html.Node) {
+	if n.Type == html.ElementNode {
+		elementCounter[n.Data]++
+	}
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		visitCount(elementCounter, c)
 	}
 }

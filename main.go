@@ -9,8 +9,15 @@ import (
 
 func main() {
 
-	if err := web.FindLinksFromHtmlFile("pkg/web/golang.org.html"); err != nil {
-		fmt.Printf("Failed caused by: %v", err)
+	// if err := web.FindLinksInHtmlFile("pkg/web/golang.org.html"); err != nil {
+	// 	fmt.Printf("FindLinksInHtmlFile failed caused by: %v", err)
+	// 	os.Exit(1)
+	// }
+
+	counter, err := web.CountElementsInHtmlFile("pkg/web/golang.org.html")
+	if err != nil {
+		fmt.Printf("FindLinksInHtmlFile failed caused by: %v", err)
 		os.Exit(1)
 	}
+	fmt.Println(counter)
 }
