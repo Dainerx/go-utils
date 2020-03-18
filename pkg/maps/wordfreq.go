@@ -18,8 +18,8 @@ func WordFreq(input string) map[string]int {
 	return wordsFreq
 }
 
-func WordFreqFromFile(filePath string) map[string]int {
-	file, err := os.Open(filePath)
+func WordFreqFromFile(inputFilePath string) map[string]int {
+	file, err := os.Open(inputFilePath)
 	if err != nil {
 		fmt.Println("Input file could not be read")
 		return nil
