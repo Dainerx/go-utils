@@ -14,10 +14,18 @@ func main() {
 	// 	os.Exit(1)
 	// }
 
-	counter, err := web.CountElementsInHtmlFile("pkg/web/golang.org.html")
+	// counter, err := web.CountElementsInHtmlFile("pkg/web/golang.org.html")
+	// if err != nil {
+	// 	fmt.Printf("FindLinksInHtmlFile failed caused by: %v", err)
+	// 	os.Exit(1)
+	// }
+	// fmt.Println(counter)
+
+	words, images, err := web.CountWordsAndImages("https://golang.org")
 	if err != nil {
-		fmt.Printf("FindLinksInHtmlFile failed caused by: %v", err)
+		fmt.Printf("CountWordsAndImages failed caused by: %v", err)
 		os.Exit(1)
 	}
-	fmt.Println(counter)
+
+	fmt.Printf("words = %d, images = %d\n", words, images)
 }
