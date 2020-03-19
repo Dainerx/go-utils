@@ -10,6 +10,23 @@ import (
 	"golang.org/x/net/html"
 )
 
+// Visit a html node recursively, calls pre(node) and post(node) for every node.
+// pre - preorder is called before visiting a child's node.
+// post - postorder is called after visiting a child's node.
+func VisitHtmlDoc(node *html.Node, pre, post func(node *html.Node)) {
+	if node != nil {
+		pre(node)
+	}
+
+	for c := node.FirstChild; c != nil; c = c.NextSibling {
+		VisitHtmlDoc(c, pre, post)
+	}
+
+	if node != nil {
+		post(node)
+	}
+}
+
 func FindLinksFromStandardInput() error {
 	doc, err := html.Parse(os.Stdin)
 	if err != nil {
