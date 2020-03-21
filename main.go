@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Dainerx/go-utils/pkg/strings"
+	"github.com/Dainerx/go-utils/pkg/general"
 )
 
 func main() {
@@ -36,6 +36,8 @@ func main() {
 	//fmt.Println(math.Max(2, 5, 8, 61, -1, 9))
 	// fmt.Println(math.Min(2, 5, 8, 61, -1, 9))
 
-	s := strings.JoinVariant(";", "a", "ee", "bb")
-	fmt.Println(s)
+	// s := strings.JoinVariant(";", "a", "ee", "bb")
+	// fmt.Println(s)
+
+	fmt.Println(general.ChangeReturnSquare(2, true))
 }
