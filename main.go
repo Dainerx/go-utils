@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/Dainerx/go-utils/pkg/web"
+	"github.com/Dainerx/go-utils/pkg/strings"
 )
 
 func main() {
@@ -28,10 +27,15 @@ func main() {
 	// }
 
 	// fmt.Printf("words = %d, images = %d\n", words, images)
-	err := web.PrintFromFile("pkg/web/short.html")
-	if err != nil {
-		fmt.Printf("PrintFromFile failed caused by: %v", err)
-		os.Exit(1)
-	}
+	// err := web.PrintFromFile("pkg/web/short.html")
+	// if err != nil {
+	// 	fmt.Printf("PrintFromFile failed caused by: %v", err)
+	// 	os.Exit(1)
+	// }
 
+	//fmt.Println(math.Max(2, 5, 8, 61, -1, 9))
+	// fmt.Println(math.Min(2, 5, 8, 61, -1, 9))
+
+	s := strings.JoinVariant(";", "a", "ee", "bb")
+	fmt.Println(s)
 }

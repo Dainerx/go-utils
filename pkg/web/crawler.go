@@ -125,3 +125,7 @@ func countWordsAndImages(node *html.Node) (words, images int) {
 	}
 	return words, images
 }
+
+func ElementByID(doc *html.Node, id string) *html.Node {
+	// trivial do same as visit test for attribute key id.
+}
