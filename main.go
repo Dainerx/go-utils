@@ -1,11 +1,5 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/Dainerx/go-utils/pkg/general"
-)
-
 func main() {
 
 	// if err := web.FindLinksInHtmlFile("pkg/web/golang.org.html"); err != nil {
@@ -39,5 +33,15 @@ func main() {
 	// s := strings.JoinVariant(";", "a", "ee", "bb")
 	// fmt.Println(s)
 
-	fmt.Println(general.ChangeReturnSquare(2, true))
+	// fmt.Println(general.ChangeReturnSquare(2, true))
+	// freq := solve.Constructor()
+	// freq.Push(3)
+	// freq.Push(2)
+	// freq.Push(9)
+	// freq.Push(10)
+
+	// fmt.Println(freq.Pop())
+	// fmt.Println(freq.Pop())
+	// fmt.Println(freq.Pop())
+	// fmt.Println(freq.Pop())
 }
