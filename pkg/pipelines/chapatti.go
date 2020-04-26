@@ -16,8 +16,8 @@ type Chappati struct {
 	MakeTime      time.Duration // time to make one chappati
 	MakeStdDev    time.Duration
 	MakeBuf       int           // buffer slots between making and packaging
-	PackageTime   time.Duration // time to inscribe one cake
-	PackageStdDev time.Duration // standard deviation of inscribing time
+	PackageTime   time.Duration // time to package one sandwitch
+	PackageStdDev time.Duration 
 }
 
 type chappati int
