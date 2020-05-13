@@ -1,12 +1,13 @@
 package main
 
 import (
+	"bufio"
+	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
 	"image/png"
 	"log"
-	"math/rand"
 	"os"
 
 	"github.com/boombuler/barcode"
@@ -32,19 +33,21 @@ const (
 
 var numbersRunes = []rune("1234567890")
 
-func InitEans(eanLength, eansCount int) []string {
-	eans := make([]string, eansCount)
-	for i := 0; i < eansCount; i++ {
-		eans[i] = func() string {
-			b := make([]rune, eanLength)
-			for i := range b {
-				b[i] = numbersRunes[rand.Intn(len(numbersRunes))]
-			}
-			return string(b)
-		}()
+// This is completly wrong due to check sum.
+func InitEans(fileName string) ([]string, error) {
+	eanSeed, err := os.OpenFile(fileName, os.O_RDONLY, 0666)
+	if err != nil {
+		return nil, err
 	}
 
-	return eans
+	eans := make([]string, 0)
+	scanner := bufio.NewScanner(eanSeed)
+	for scanner.Scan() {
+		line := scanner.Text()
+		eans = append(eans, line)
+	}
+
+	return eans, nil
 }
 
 // Encode Ean in one image
@@ -103,10 +106,17 @@ type BarcodeImage struct {
 }
 
 func main() {
-	eans := InitEans(13, 10)
+	eans, err := InitEans("seed-clean.txt")
+	if err != nil {
+		log.Fatalf("Failed to read eans from seed: %v", err)
+
+	}
 	imageChannel := make(chan *BarcodeImage, len(eans))
 
 	for _, ean := range eans {
+		fmt.Println(ean)
+		_, err := EncodeEan(ean)
+		fmt.Println(err)
 		go func(ean string) {
 			barcodeImage, err := EncodeEan(ean)
 			if err != nil {
@@ -131,5 +141,4 @@ func main() {
 			close(imageChannel)
 		}
 	}
-
 }
