@@ -2,7 +2,6 @@ package barcode
 
 import (
 	"bufio"
-	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
@@ -88,7 +87,7 @@ func EncodeEan(ean string) (image.Image, error) {
 	return finalImage, nil
 }
 
-func EncodeImage(img image.Image, fileName string) error {
+func WriteImage(img image.Image, fileName string) error {
 	// encode the barcode as png
 	file, err := os.Create(fileName + fileExt)
 	if err != nil {
@@ -114,9 +113,6 @@ func main() {
 	imageChannel := make(chan *BarcodeImage, len(eans))
 
 	for _, ean := range eans {
-		fmt.Println(ean)
-		_, err := EncodeEan(ean)
-		fmt.Println(err)
 		go func(ean string) {
 			barcodeImage, err := EncodeEan(ean)
 			if err != nil {
@@ -132,7 +128,7 @@ func main() {
 		if barcodeimg.img == nil {
 			log.Printf("Failed to encode %s\n", barcodeimg.ean)
 		} else {
-			EncodeImage(barcodeimg.img, barcodeimg.ean)
+			WriteImage(barcodeimg.img, barcodeimg.ean)
 			log.Printf("Successfully encoded %s\n", barcodeimg.ean)
 		}
 
