@@ -1,9 +1,8 @@
-package main
+package barcode
 
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 )
@@ -44,16 +43,16 @@ func getEanFromLine(eanLine string) string {
 	return ean
 }
 
-func main() {
+func CleanSeed(fileSeed, fileDestination string) error {
 	source, err := os.Open("seed.json")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer source.Close()
 
 	destination, err := os.Create("seed-cleaned.txt")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer destination.Close()
 
@@ -71,7 +70,18 @@ func main() {
 	}
 
 	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+		return err
 	}
 
+	return nil
 }
+
+// func main() {
+
+// 	err := CleanSeed("seed.json", "seed-clean.txt")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	log.Println("Finished")
+// }
