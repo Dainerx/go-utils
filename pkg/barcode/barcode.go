@@ -1,4 +1,4 @@
-package barcode
+package main
 
 import (
 	"bufio"
@@ -8,6 +8,7 @@ import (
 	"image/png"
 	"log"
 	"os"
+	"time"
 
 	"github.com/boombuler/barcode"
 	Ean "github.com/boombuler/barcode/ean"
@@ -105,6 +106,7 @@ type BarcodeImage struct {
 }
 
 func main() {
+
 	eans, err := InitEans("seed-clean.txt")
 	if err != nil {
 		log.Fatalf("Failed to read eans from seed: %v", err)
@@ -112,6 +114,7 @@ func main() {
 	}
 	imageChannel := make(chan *BarcodeImage, len(eans))
 
+	t := time.Now()
 	for _, ean := range eans {
 		go func(ean string) {
 			barcodeImage, err := EncodeEan(ean)
@@ -123,6 +126,7 @@ func main() {
 		}(ean)
 	}
 
+	count := 0
 	encoded := 0
 	for barcodeimg := range imageChannel {
 		if barcodeimg.img == nil {
@@ -130,11 +134,14 @@ func main() {
 		} else {
 			WriteImage(barcodeimg.img, barcodeimg.ean)
 			log.Printf("Successfully encoded %s\n", barcodeimg.ean)
+			encoded++
 		}
 
-		encoded++
-		if encoded == len(eans) {
+		count++
+		if count == len(eans) {
 			close(imageChannel)
 		}
 	}
+
+	log.Printf("Finished encoded %d, time taken: %v", encoded, time.Since(t))
 }
